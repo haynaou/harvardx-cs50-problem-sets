@@ -69,7 +69,6 @@ int main(int argc, string argv[])
 // returns true if candidate candidate is found, otherwise false
 bool vote(string name)
 {
-    
     // Check if name is in candidate, if so update vote
     for (int i = 0; i < candidate_count; i++)
     {
@@ -102,7 +101,7 @@ void print_winner(void)
 
 }
 
-// Sort array of candidate using selection sort algorithns 
+// Sort array of candidates using selection sort algorithm 
 void sort(candidate *array, int size) 
 {
     for (int i = 0; i < size; i++)
