@@ -1,4 +1,4 @@
-# HarvardX_CS50_Problem_Sets
+# HarvardX CS50 Problem Sets
 
 This repository contains solutions for the problem sets of Harvard CS50's course, Introduction to Computer Science.
 
