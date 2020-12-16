@@ -11,7 +11,6 @@ bool valid(int i, int j, int height, int width);
 void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE unmodified_image[height][width]);
 
 
-
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -39,13 +38,11 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             int sepiaGreen = round(.349 * image[i][j].rgbtRed + .686 * image[i][j].rgbtGreen + .168 * image[i][j].rgbtBlue);
             int sepiaBlue = round(.272 * image[i][j].rgbtRed + .534 * image[i][j].rgbtGreen + .131 * image[i][j].rgbtBlue);
 
-            // Return 255 if new value exeeds 255
             image[i][j].rgbtRed = min(sepiaRed, 255);
             image[i][j].rgbtGreen = min(sepiaGreen, 255);
             image[i][j].rgbtBlue = min(sepiaBlue, 255);
         }
     }
-
     return;
 }
 
@@ -54,9 +51,9 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
     for (int i = 0; i < height; i++)
     {   
-        // Use two pointers to swap 
         for (int j = 0, k = width - 1; k > j ; j++, k--)
         {
+            // Use two pointers to swap 
             swap(&image[i][j].rgbtRed, &image[i][k].rgbtRed);
             swap(&image[i][j].rgbtGreen, &image[i][k].rgbtGreen);
             swap(&image[i][j].rgbtBlue, &image[i][k].rgbtBlue);
@@ -68,70 +65,59 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    // Create a tomporary image copy of the original to save original values of pixel colors
+    // Create a copy of the original image to read unmodified pixel values
     RGBTRIPLE unmodified_image[height][width];
-    
-    // Copying the image to keep an unaltered version to loop over
     memcpy(unmodified_image, image, sizeof(RGBTRIPLE) * height * width);
     
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
+            // Set the colors of the pixel (i, j) to the average of the surrounding pixels
             set_average(i, j, height, width, image, unmodified_image);
         }
     }
-
     return;
 }
 
-
-// Min Function
+// Min return min of two integers
 int min(int x, int y)
 {
     if (x > y)
     {
         return y;
     }
-
     return x;
 }
-
-
 
 // Swap function
 void swap(BYTE *x, BYTE *y)
 {
-    BYTE temp;
-    temp = *x;
+    BYTE temp = *x;
     *x = *y;
     *y = temp;
 }
 
-
-
-// Function to determin valid index for blur box
+// Function to determine valid index for blur box
 bool valid(int i, int j, int height, int width)
 {
-    return ((i >= 0) && (i < height) && (j >= 0) && (j < width));
+    return (i >= 0 && i < height) && (j >= 0 && j < width);
 }
-
 
 // Function to set_average for new blur pixels
 void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE unmodified_image[height][width])
 {
     // blur box matrix 3x3 that stores indexes of neighbors pixels
     int box[3][3][2] = { 
-    { {i - 1, j - 1}, {i - 1, j}, {i - 1, j + 1} }, 
-    { {i    , j - 1}, {i,     j}, {i,   j + 1} }, 
-    { {i + 1, j - 1}, {i + 1, j}, {i + 1, j + 1} }
+        { {i - 1, j - 1}, {i - 1, j}, {i - 1, j + 1} }, 
+        { {i    , j - 1}, {i    , j}, {i    , j + 1} }, 
+        { {i + 1, j - 1}, {i + 1, j}, {i + 1, j + 1} }
     };
     
     int sumRed = 0, sumGreen = 0, sumBlue = 0;
     float counter = 0;
     
-    
-    // Loop over blux box of a given pixel (ij) and get neighbors values if their index is valid
+    // Loop over blur box of a given pixel (i, j) and get neighbors values if their index is valid
     for (int k = 0; k < 3; k++)
     {
         for (int p = 0; p < 3; p++)
@@ -145,9 +131,9 @@ void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][wi
                 sumRed += unmodified_image[nx][ny].rgbtRed;
                 sumGreen += unmodified_image[nx][ny].rgbtGreen;
                 sumBlue += unmodified_image[nx][ny].rgbtBlue;
+
                 counter++;
             }
-
         }
     }
     
