@@ -8,7 +8,7 @@
 int min(int, int);
 void swap(BYTE *, BYTE *);
 bool valid(int i, int j, int height, int width);
-void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE temp[height][width]);
+void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE unmodified_image[height][width]);
 
 
 
@@ -69,16 +69,16 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     // Create a tomporary image copy of the original to save original values of pixel colors
-    RGBTRIPLE temp[height][width];
+    RGBTRIPLE unmodified_image[height][width];
     
     // Copying the image to keep an unaltered version to loop over
-    memcpy(temp, image, sizeof(RGBTRIPLE) * height * width);
+    memcpy(unmodified_image, image, sizeof(RGBTRIPLE) * height * width);
     
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            set_average(i, j, height, width, image, temp);
+            set_average(i, j, height, width, image, unmodified_image);
         }
     }
 
@@ -118,7 +118,7 @@ bool valid(int i, int j, int height, int width)
 
 
 // Function to set_average for new blur pixels
-void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE temp[height][width])
+void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE unmodified_image[height][width])
 {
     // blur box matrix 3x3 that stores indexes of neighbors pixels
     int box[3][3][2] = { 
@@ -142,9 +142,9 @@ void set_average(int i, int j, int height, int width, RGBTRIPLE image[height][wi
             
             if (valid(nx, ny, height, width))
             {
-                sumRed += temp[nx][ny].rgbtRed;
-                sumGreen += temp[nx][ny].rgbtGreen;
-                sumBlue += temp[nx][ny].rgbtBlue;
+                sumRed += unmodified_image[nx][ny].rgbtRed;
+                sumGreen += unmodified_image[nx][ny].rgbtGreen;
+                sumBlue += unmodified_image[nx][ny].rgbtBlue;
                 counter++;
             }
 
