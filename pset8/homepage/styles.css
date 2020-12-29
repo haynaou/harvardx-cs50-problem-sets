@@ -1,0 +1,23 @@
+.planet {
+    margin-right: 50px;
+}
+
+img {
+    object-fit: contain;
+    padding: 20px;
+}
+
+.main-title {
+    margin: 60px;
+}
+
+footer {
+    font-size: 10px;
+    color: gray;
+}
+
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
