@@ -1,0 +1,5 @@
+Prompt the user to enter a positive number for the height of the pyramid 
+Test height entered against 2 conditions
+    if height less than 0 or greater than 8 prompt user for height
+Iterate from row 0 through height
+    on each row height -1 spaces and row +1 hashes then a new line

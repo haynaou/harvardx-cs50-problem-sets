@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+    <!--Add cash to wallet form-->
+    <form class="form-inline" action="/" method="post">
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="cash" class="sr-only">Cash</label>
+        <input autocomplete="off" class="form-control" min="0" name="cash" placeholder="0" type="number" id="cash">
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Add Cash</button>
+    </form>
+
+    <hr/>
+
+    <table class="table table-striped text-left">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td class="font-weight-bold">${{total}}</td>
+            </tr>
+        </tfoot>
+        <tbody>
+
+            {% for share in shares %}
+                <tr>
+                    <td>{{share['company_name']}}</td>
+                    <td>{{share['symbol']}}</td>
+                    <td>{{share['quantity']}}</td>
+                    <td>${{share['current_price']}}</td>
+                    <td>${{share['total']}}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="4" class="font-weight-bold">CASH</td>
+                <td>${{cash}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
