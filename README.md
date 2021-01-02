@@ -1,6 +1,6 @@
 # HarvardX CS50 Problem Sets
 
-This repository contains solutions for the problem sets of [Harvard CS50's course, Introduction to Computer Science] (https://cs50.harvard.edu/x/2020/tracks/web/).
+This repository contains solutions for the problem sets of (Harvard CS50's course, Introduction to Computer Science) [https://cs50.harvard.edu/x/2020/tracks/web/].
 
 * Week 0: Scratch 
 * Week 1: C
